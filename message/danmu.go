@@ -60,7 +60,7 @@ type (
 	}
 )
 
-func (d *Danmaku) Parse(data []byte) {
+func (d *Danmaku) Parse(data []byte, owner int) {
 	sb := utils.BytesToString(data)
 	parsed := gjson.Parse(sb)
 	info := parsed.Get("info")
@@ -82,6 +82,7 @@ func (d *Danmaku) Parse(data []byte) {
 		Uid:          int(i2.Get("0").Int()),
 		Uname:        i2.Get("1").String(),
 		Admin:        i2.Get("2").Bool(),
+		Owner:        int(i2.Get("0").Int()) == owner,
 		Urank:        int(i2.Get("5").Int()),
 		MobileVerify: i2.Get("6").Bool(),
 		GuardLevel:   int(info.Get("7").Int()),

@@ -4,6 +4,7 @@ type User struct {
 	Uid          int
 	Uname        string
 	Admin        bool
+	Owner        bool
 	Urank        int
 	MobileVerify bool
 	Medal        *Medal

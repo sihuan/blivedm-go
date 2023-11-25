@@ -18,6 +18,7 @@ import (
 type Client struct {
 	conn                *websocket.Conn
 	RoomID              int
+	RoomOwner           int
 	Uid                 int
 	Buvid               string
 	Cookie              string
@@ -72,6 +73,7 @@ func (c *Client) init() error {
 		log.Errorf("room=%s init GetRoomInfo fialed, %s", c.RoomID, err)
 	}
 	c.RoomID = roomInfo.Data.RoomId
+	c.RoomOwner = roomInfo.Data.Uid
 	if c.host == "" {
 		info, err := api.GetDanmuInfo(c.RoomID, c.Cookie)
 		if err != nil {

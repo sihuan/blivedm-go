@@ -1,13 +1,14 @@
 package client
 
 import (
+	"regexp"
+	"runtime/debug"
+	"strings"
+
 	"github.com/Akegarasu/blivedm-go/message"
 	"github.com/Akegarasu/blivedm-go/packet"
 	"github.com/Akegarasu/blivedm-go/utils"
 	log "github.com/sirupsen/logrus"
-	"regexp"
-	"runtime/debug"
-	"strings"
 )
 
 var (
@@ -90,7 +91,7 @@ func (c *Client) Handle(p packet.Packet) {
 		switch cmd {
 		case "DANMU_MSG":
 			d := new(message.Danmaku)
-			d.Parse(p.Body)
+			d.Parse(p.Body, c.RoomOwner)
 			for _, fn := range c.eventHandlers.danmakuMessageHandlers {
 				go cover(func() { fn(d) })
 			}
